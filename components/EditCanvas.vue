@@ -89,16 +89,10 @@ const col = (x: number, y: number, img: ImageData, r: number, g: number, b: numb
 	img.data[(s * 4) * y + (x * 4) + 2] = b
 }
 
-let d = 0.1
-const kNN: [string, [number, number]][] = [
-	[``, [0, 0]],
-	[``, [0, 0]],
-	[``, [0, 0]],
-	[``, [0, 0]]
-]
-const stk = []
-const draw = () =>
+
+const draw = (time: number) =>
 {
+	// if (data.run) requestAnimationFrame( draw )
 	if (!ready(data)) return
 
 	if (!data.setImage)
@@ -138,7 +132,7 @@ const draw = () =>
 			// if (pxl.r !== 0 || pxl.g !== 0 || pxl.b !== 0) {
 			if (pxl.r === 255 && pxl.g === 255 && pxl.b === 255) {
 				if (Math.random() < 0.5) continue
-				stk.push([x - 1, y], [x, y - 1], [x + 1, y], [x, y + 1])
+				const stk = [[x - 1, y], [x, y - 1], [x + 1, y], [x, y + 1]];
 				let r = 0.01
 				while(stk.length > 0) {
 					const item = stk.pop()
@@ -152,43 +146,25 @@ const draw = () =>
 						{	
 							data.ctx.fillStyle = `rgba(255,255,255,${1 - (r * 0.1)})`;
 							data.ctx.fillRect(item[0], item[1], 1, 1)
-							kNN[0][0] = `${item[0] - 1}_${item[1]}`
-							kNN[0][1][0] = item[0] - 1
-							kNN[0][1][1] = item[1]
-							kNN[1][0] = `${item[0]}_${item[1] - 1}`
-							kNN[1][1][0] = item[0]
-							kNN[1][1][1] = item[1] - 1
-							kNN[2][0] = `${item[0] + 1}_${item[1]}`
-							kNN[2][1][0] = item[0] + 1
-							kNN[2][1][1] = item[1]
-							kNN[3][0] = `${item[0]}_${item[1] + 1}`
-							kNN[3][1][0] = item[0]
-							kNN[3][1][1] = item[1] + 1
-							for (var i = kNN.length - 1; i > 0; i--) {
-								var rand = Math.floor(Math.random() * (i + 1));
-								[kNN[i], kNN[rand]] = [kNN[rand], kNN[i]]
+							const kNN: [string, [number, number]][] = [
+								[`${item[0] - 1}_${item[1]}`, [item[0] - 1, item[1]]],
+								[`${item[0]}_${item[1] - 1}`, [item[0], item[1] - 1]],
+								[`${item[0]}_${item[1] + 1}`, [item[0], item[1] + 1]],
+								[`${item[0] + 1}_${item[1]}`, [item[0] + 1, item[1]]]
+							]
+							while(kNN.length) {
+								const i = kNN.splice(~~(Math.random() * kNN.length), 1)[0]
+								// if (visited[i[0]] && Math.random() > r * 1000)
+								// 	stk.push(i[1])
+								stk.push(i[1])
 							}
-							stk.push(kNN[0][1])
-							stk.push(kNN[1][1])
-							stk.push(kNN[2][1])
-							stk.push(kNN[3][1])
-							// let x = `1111`;
-							// while(Number(x) > 0) {
-							// 	const index = Math.random() * Number(x)
-							// 	x.replace()
-							// 	const i = kNN.splice(~~(Math.random() * kNN.length), 1)[0]
-							// 	stk.push(i[1])
-							// }
-							r += 0.001
-							// r += d
+							r += 0.0001
 						}
 					}
 				}
 			}
 		}
 	}
-	// d -= 0.001
-	// if (data.run && d > 0.00001) setTimeout(() => draw(), 10)
 }
 
 const start = () =>
