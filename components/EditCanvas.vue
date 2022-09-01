@@ -140,12 +140,12 @@ const draw = () =>
 					// if (visited[kN] && Math.random() > r * 0.01) continue
 					const pxlN = rgb(item[0], item[1], baseimg)
 					visited[kN] = true
-					// const pxlN0 = (pxlN.r !== 255 && pxlN.g !== 255 && pxlN.b !== 255)
-					const pxlN0 = (pxlN.r === 0 || pxlN.g === 0 || pxlN.b === 0)
+					const pxlN0 = (pxlN.r !== 255 && pxlN.g !== 255 && pxlN.b !== 255)
+					// const pxlN0 = (pxlN.r === 0 || pxlN.g === 0 || pxlN.b === 0)
 					if (pxlN0) {
 						if (Math.random() > r)
 						{	
-							data.ctx.fillStyle = `rgba(255,255,255,${1 - (r * 0.01)})`;
+							data.ctx.fillStyle = `rgba(255,255,255,${1 - (r * 0.1)})`;
 							data.ctx.fillRect(item[0], item[1], 1, 1)
 							const kNN: [string, [number, number]][] = [
 								[`${item[0] - 1}_${item[1]}`, [item[0] - 1, item[1]]],
