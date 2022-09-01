@@ -90,7 +90,7 @@ const col = (x: number, y: number, img: ImageData, r: number, g: number, b: numb
 }
 
 
-const draw = (time: number) =>
+const draw = () =>
 {
 	// if (data.run) requestAnimationFrame( draw )
 	if (!ready(data)) return
@@ -131,20 +131,21 @@ const draw = (time: number) =>
 			const pxl = rgb(x, y, baseimg)
 			if (pxl.r !== 0 || pxl.g !== 0 || pxl.b !== 0) {
 			// if (pxl.r === 255 && pxl.g === 255 && pxl.b === 255) {
-				if (Math.random() < 0.5) continue
+				// if (Math.random() < 0.5) continue
 				const stk = [[x - 1, y], [x, y - 1], [x + 1, y], [x, y + 1]];
 				let r = 0.01
 				while(stk.length > 0) {
 					const item = stk.pop()
 					const kN = `${item[0]}_${item[1]}`;
-					if (visited[kN] && Math.random() > r * 0.01) continue
+					// if (visited[kN] && Math.random() > r * 0.01) continue
 					const pxlN = rgb(item[0], item[1], baseimg)
 					visited[kN] = true
-					const pxlN0 = (pxlN.r !== 255 && pxlN.g !== 255 && pxlN.b !== 255)
+					// const pxlN0 = (pxlN.r !== 255 && pxlN.g !== 255 && pxlN.b !== 255)
+					const pxlN0 = (pxlN.r === 0 || pxlN.g === 0 || pxlN.b === 0)
 					if (pxlN0) {
 						if (Math.random() > r)
 						{	
-							data.ctx.fillStyle = `rgba(255,255,255,${1 - (r * 0.1)})`;
+							data.ctx.fillStyle = `rgba(255,255,255,${1 - (r * 0.01)})`;
 							data.ctx.fillRect(item[0], item[1], 1, 1)
 							const kNN: [string, [number, number]][] = [
 								[`${item[0] - 1}_${item[1]}`, [item[0] - 1, item[1]]],
@@ -163,6 +164,7 @@ const draw = (time: number) =>
 			}
 		}
 	}
+	// setTimeout(() => draw(), 10)
 }
 
 const start = () =>
