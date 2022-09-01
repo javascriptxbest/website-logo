@@ -129,8 +129,8 @@ const draw = (time: number) =>
 			const k = `${x}_${y}`
 			if (visited[k]) continue
 			const pxl = rgb(x, y, baseimg)
-			// if (pxl.r !== 0 || pxl.g !== 0 || pxl.b !== 0) {
-			if (pxl.r === 255 && pxl.g === 255 && pxl.b === 255) {
+			if (pxl.r !== 0 || pxl.g !== 0 || pxl.b !== 0) {
+			// if (pxl.r === 255 && pxl.g === 255 && pxl.b === 255) {
 				if (Math.random() < 0.5) continue
 				const stk = [[x - 1, y], [x, y - 1], [x + 1, y], [x, y + 1]];
 				let r = 0.01
@@ -154,11 +154,9 @@ const draw = (time: number) =>
 							]
 							while(kNN.length) {
 								const i = kNN.splice(~~(Math.random() * kNN.length), 1)[0]
-								// if (visited[i[0]] && Math.random() > r * 1000)
-								// 	stk.push(i[1])
 								stk.push(i[1])
 							}
-							r += 0.0001
+							r += 0.001
 						}
 					}
 				}
