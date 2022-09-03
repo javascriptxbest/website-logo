@@ -2,7 +2,7 @@
 
 <template>
 <div @click="loading = true">
-	<img v-if="!loading" :src="src" />
+	<img v-if="!loading" :src="src" width="900" height="450" />
 	<span v-else>Loading...</span>
 </div>
 </template>
@@ -198,9 +198,9 @@ div {
 	place-items: center;
 }
 div img {
-	mask-image: url(/assets/border.svg);
+	mask-image: url(~/assets/border.svg);
 	mask-size: 100% 100%;
-	-webkit-mask-image: url(/assets/border.svg);
+	-webkit-mask-image: url(~/assets/border.svg);
 	-webkit-mask-size: 100% 100%;
 }
 </style>
